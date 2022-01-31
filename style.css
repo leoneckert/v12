@@ -1,0 +1,113 @@
+/* #recordingSignal{
+  width:50px;
+  height:50px;
+  border-radius: 50px;
+  background-color: black;
+  transition: all 500ms;
+} */
+
+.windowItem{
+  width: 100%;
+  max-width: 450px;
+  /* height: 50px; */
+  /* background-color: lavender; */
+  /* border: 3px black solid; */
+  display: flex;
+  border-top: dashed 0.5px black;
+  padding: 10px 0px;
+  margin-top: 10px;
+}
+.windowItemLeft{
+  /* border: 3px red solid; */
+  flex-grow: 1;
+}
+.windowItemRight{
+  /* border: 3px red solid; */
+}
+
+.windowItemLeftTop{
+  display: flex;
+  margin-bottom: 5px;
+}
+
+/* .colorPickerElm{
+  height: 20px;
+  width: 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+}
+.colorPickerElm div{
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background-color: black;
+}
+.colorPickerElm div:hover{
+  outline: 1px solid red;
+} */
+
+.windowItemLeftBottom{
+  display: flex;
+  flex-wrap: wrap;
+}
+.modePicker{
+  min-width:25%;
+  /* flex-grow: 0.5;
+  min-width: 100px; */
+  /* width: 50%; */
+  /* flex-grow: 0.5;
+  min-width: 30px; */
+  /* flex-basis: 100px; */
+  /* width: 100px; */
+  /* flex-basis: 45%; */
+  /* flex-shrink: 0; */
+
+  height: 20px;
+  /* border: 1px solid green; */
+  /* min-width: 50px; */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@media only screen and (max-width: 350px) {
+  .modePicker{
+    min-width:50%;
+  }
+}
+
+.closeButton{
+  color:blue;
+}
+.closeButton:hover{
+  color:#f71302;
+}
+.curvePickerElm{
+  display: flex;
+      justify-content: space-around;
+}
+
+.curvePickerElm img{
+  width: 33px;
+}
+
+
+.verticalFlex{
+  display: flex;
+  flex-direction: row;
+}
+.radioTextButton{
+  margin: 0;
+  padding: 0px 3px;
+  cursor: pointer;
+}
+.radioTextButton:hover{
+  background-color: black;
+  color: white;
+}
+.radioTextButton.active{
+  background-color: black;
+  color: white;
+}

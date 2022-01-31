@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>nothing</title>
+    <style media="screen">
+      body{
+        margin: 0;
+      }
+      #flexContainer{
+        margin: 0;
+        display: flex;
+        font-family: sans-serif;
+        font-style: italic;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+        /* font-size: 6vw; */
+        /* font-size: calc(4vw + 4vh + 2vmin); */
+        /* word-break: keep-all; */
+
+      }
+      #name{
+        white-space: nowrap;
+      }
+      #infoOverlay{
+        position: absolute;
+        top:0px;
+        left:0px;
+        background-color: rgba(0, 0, 0, 0.786);
+        height: 100vh;
+        width: 100%;
+        pointer-events: none;
+      }
+      #infoOverlay p{
+        margin: 0px;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.8em;
+        font-weight: bold;
+        color: greenyellow;
+        transition: color 200ms;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="flexContainer">
+      <p id="name">nothing</p>
+    </div>
+    
+    <div id=infoOverlay>
+      <div id="spaceInfoWrapper">
+        <p class=""></p>
+        <p class=""></p>
+        <p class=""></p>
+        <p class=""></p>
+        <p class=""></p>
+      </div>
+      <div id="soundInfoWrapper">
+        <p class=""></p>
+        <p class=""></p>
+        <p class=""></p>
+        <p class=""></p>
+        <p class=""></p>
+      </div>
+      
+
+    </div>
+
+
+
+    <script type="text/javascript">
+      // function blurBounce(w){
+      //   window.blur();
+      //   w.focus();
+      // }
+      // let instrument = undefined;
+  
+
+      let name = document.getElementById("name");
+      let padding = 10;
+      let maxHeight = 18;
+      function textSize(){
+        let windowWidth = window.innerWidth - padding;
+        name.style.transform = "scale(1)";
+        let textWidth = name.getBoundingClientRect().width;
+        let factor = windowWidth/textWidth;
+        name.style.transform = "scale("+factor+")";
+
+        let textHeight = name.getBoundingClientRect().height;
+        while(textHeight>maxHeight){
+          factor*=0.99;
+          name.style.transform = "scale("+factor+")";
+          textHeight = name.getBoundingClientRect().height;
+        }
+        // console.log(factor)
+      }
+      textSize();
+
+
+      function changeName(newName){
+        newName = newName + "("+window.type+")"//+  " " + "⦚﹏⌇" //(this.type == "osc"?"":"∿")
+        name.innerHTML = newName;
+
+        textSize();
+        document.title = newName==""?"-":newName;
+      }
+
+
+      // function initInstrument(_instrument){
+      //   instrument = _instrument;
+      //   // instrument.toDestination();
+      //   console.log("got ins", instrument);
+      //   instrument.start();
+      // }
+      let infoWrapper = document.querySelector("#spaceInfoWrapper");
+      function displayInfo(infoItems){
+        // console.log(infoItems);
+        infoItems.forEach(item=>{
+          let className = item.label.split(' ').join('').replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+          let elm = infoWrapper.querySelector("."+className);
+          // console.log(elm)
+          item.textvalue = item.label + ": " + item.textvalue;
+          if(elm!=null){
+            changeInfo(elm, className, item.textvalue);
+          }else{
+            let p = document.createElement("p");
+            p.className = className;
+            infoWrapper.appendChild(p)
+            changeInfo(p, className, item.textvalue);
+          }
+        })
+        // let lines = infoWrapper.querySelectorAll("p");
+        // changeInfo(lines[0], 0, "pos (p): " + pos.xpix + "  " + pos.ypix);
+        // changeInfo(lines[1], 1, "pos (%): " + pos.xmapped.toFixed(1) + "  " + pos.ymapped.toFixed(1));
+        // changeInfo(lines[2], 2, "size (p): " + size.wpix + "  " + size.hpix);
+        // changeInfo(lines[3], 3, "size (%): " + size.wmapped.toFixed(1) + "  " + size.hmapped.toFixed(1));      
+        // changeInfo(lines[4], 4, "gain: " + mapValue(pos.ymapped, 0, 100, 0, 1).toFixed(3) );
+        // changeInfo(lines[5], 5, "pan: " + mapValue(pos.xmapped, 0, 100, -1, 1).toFixed(1) );
+      };
+   
+
+
+      let timeouts = {};
+      function changeInfo(elm, id, text){
+        if(elm.innerHTML != text){
+          elm.innerHTML = text;
+          elm.style.color = "red";
+          if(timeouts[id]==undefined){
+            timeouts[id] = setInterval(()=>{
+              elm.style.color = "greenyellow";
+            }, 1500)
+          }else{
+            clearInterval(timeouts[id]);
+            timeouts[id] = setInterval(()=>{
+              elm.style.color = "greenyellow"
+            }, 1500)
+          }
+          
+        }
+      }
+
+
+      window.addEventListener("resize", ()=>{
+        textSize();
+      })
+
+      //function from p5: https://github.com/processing/p5.js/blob/main/src/math/calculation.js#L440
+      function constrain(n, low, high) {
+        return Math.max(Math.min(n, high), low);
+      };
+      function mapValue(n, start1, stop1, start2, stop2) {
+        // p5._validateParameters('map', arguments);
+        const newval = (n - start1) / (stop1 - start1) * (stop2 - start2) + start2;
+        // if (!withinBounds) {
+        //   return newval;
+        // }
+        if (start2 < stop2) {
+          return constrain(newval, start2, stop2);
+        } else {
+          return constrain(newval, stop2, start2);
+        }
+      };
+
+     
+    </script>
+  </body>
+</html>
